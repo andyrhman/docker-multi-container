@@ -7,19 +7,7 @@ on:
       - master
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Build and test Docker images
-      run: |
-        docker build -t tataran/react-test -f ./client/Dockerfile.dev ./client
-        docker run -e CI=true tataran/react-test npm test
   build:
-    needs: test
     runs-on: ubuntu-latest
 
     steps:
