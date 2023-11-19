@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
       - name: Build Docker images and push to Docker Hub
         run: |
           docker build -t tataran/multi-client ./client
@@ -44,8 +44,8 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
         aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-        application_name: multi-docker
-        environment_name: Multi-docker-env
+        application_name: multi-docker-2
+        environment_name: Multi-docker-2-env
         region: ap-southeast-1
         version_label: ${{github.run_number}}
         deployment_package: ${{ github.run_id }}.zip
