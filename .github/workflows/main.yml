@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
       - name: Build Docker images and push to Docker Hub
         run: |
           docker build -t tataran/multi-client ./client
