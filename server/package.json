@@ -10,5 +10,8 @@
     "scripts": {
         "dev": "nodemon",
         "start": "node index.js"
+    },
+    "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "*"
     }
 }

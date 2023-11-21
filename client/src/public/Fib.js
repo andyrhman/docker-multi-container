@@ -15,28 +15,44 @@ class Fib extends Component {
     }
 
     async fetchValues() {
-        const values = await axios.get('/api/values/current');
-        this.setState({ values: values.data });
+        try {
+            const values = await axios.get('/api/values/current');
+            this.setState({ values: values.data });
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async fetchIndexes() {
-        const seenIndexes = await axios.get('/api/values/all');
-        this.setState({
-            seenIndexes: seenIndexes.data,
-        });
+        try {
+            const seenIndexes = await axios.get('/api/values/all');
+            this.setState({
+                seenIndexes: seenIndexes.data,
+            });
+        } catch (error) {
+            console.log(error);
+            this.setState({ seenIndexes: [] });
+        }
     }
 
     handleSubmit = async (event) => {
-        event.preventDefault();
+        try {
+            event.preventDefault();
 
-        await axios.post('/api/values', {
-            index: this.state.index,
-        });
-        this.setState({ index: '' });
+            await axios.post('/api/values', {
+                index: this.state.index,
+            });
+            this.setState({ index: '' });
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     renderSeenIndexes() {
-        return this.state.seenIndexes.map(({ number }) => number).join(', ');
+        if (Array.isArray(this.state.seenIndexes)) {
+            return this.state.seenIndexes.map(({ number }) => number).join(', ');
+        }
+        return '';
     }
 
     renderValues() {
@@ -56,13 +72,14 @@ class Fib extends Component {
     render() {
         return (
             <div className="App-header flex-container">
+                <h1>Fibonacchi Calculator Version 2</h1>
                 <form onSubmit={this.handleSubmit} className='flex-container'>
                     <label>Enter your index:</label>
                     <input
                         value={this.state.index}
                         onChange={(event) => this.setState({ index: event.target.value })}
                     />
-                    <button>Submit</button>
+                    <button>Submit Update Index</button>
                 </form>
 
                 <h3>Indexes I have seen:</h3>
