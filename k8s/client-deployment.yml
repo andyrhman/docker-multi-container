@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  # This is a pod or a Container.
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: client
+          # Apply the new update image with:
+          # kubectl rollout restart deployment/client-deployment
+          image: tataran/multi-client
+          ports:
+            - containerPort: 3000
+  # Create 3 container replicas
+  replicas: 3
+  # Let the Deployment object knows to select the pod of component: web
+  selector:
+    matchLabels:
+      component: web
