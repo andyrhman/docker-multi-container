@@ -11,8 +11,19 @@ spec:
       containers:
         - name: postgres
           image: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              value: your_password
           ports:
             - containerPort: 5432
+          volumeMounts:
+            - name: postgres-volume
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+      volumes:
+        - name: postgres-volume
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
   replicas: 1
   selector:
     matchLabels:
