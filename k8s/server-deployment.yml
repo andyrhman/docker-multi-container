@@ -12,10 +12,28 @@ spec:
       containers:
         - name: server
           # Apply the new update image with:
-          # kubectl rollout restart deployment/client-deployment
+          # kubectl rollout restart deployment/server-deployment
           image: tataran/multi-server
           ports:
             - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: redis-service
+            - name: REDIS_PORT
+              value: '6379'
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-service
+            - name: PGPORT
+              value: '5432'
+            - name: PGDATABASE
+              value: complex_db
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: POSTGRES_PASSWORD
   # Create 3 container replicas
   replicas: 3
   # Let the Deployment object knows to select the pod of component: web

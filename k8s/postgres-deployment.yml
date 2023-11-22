@@ -13,7 +13,10 @@ spec:
           image: postgres
           env:
             - name: POSTGRES_PASSWORD
-              value: your_password
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: POSTGRES_PASSWORD
           ports:
             - containerPort: 5432
           volumeMounts:
